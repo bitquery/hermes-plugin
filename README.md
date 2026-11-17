@@ -38,7 +38,7 @@ Bitquery brings on-chain data into Hermes Agent. Ask about token prices, DEX tra
 2. Connect your Bitquery account:
 
    ```
-   hermes mcp add bitquery --url https://mcp.bitquery.io/mcp --auth oauth
+   hermes mcp add bitquery --url https://mcp.bitquery.io/mcp --auth oauth --connect-timeout 300
    ```
 
    Hermes opens Bitquery's sign-in in your browser. A new account starts with a free 7-day trial. The plugin's own `mcp.json` does not sign you in, so this step is needed.
