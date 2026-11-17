@@ -1,0 +1,14 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "bitquery",
+  "version": "1.0.0",
+  "description": "On-chain data in Hermes through Bitquery's hosted MCP server: token prices and candles, DEX trades, trader PnL, fund tracing, address labels, Hyperliquid and Polymarket. Read-only.",
+  "author": {
+    "name": "Bitquery",
+    "url": "https://bitquery.io"
+  },
+  "homepage": "https://docs.bitquery.io/docs/mcp/mcp-server/",
+  "repository": "https://github.com/bitquery/hermes-plugin",
+  "license": "MIT",
+  "keywords": ["blockchain", "on-chain-data", "dex", "crypto", "token-prices", "fund-tracing", "polymarket", "hyperliquid", "mcp"]
+}
