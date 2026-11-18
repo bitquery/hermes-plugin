@@ -6,7 +6,7 @@ compatibility: Needs the Bitquery MCP server (https://mcp.bitquery.io/mcp) conne
 
 # DEX trades and traders
 
-Everything comes from the Bitquery MCP tools. If they are not available, or a Bitquery tool says to reconnect, tell the user how to connect Bitquery and stop: the first time, `hermes mcp add bitquery --url https://mcp.bitquery.io/mcp --auth oauth --connect-timeout 300`; after that, `hermes mcp login bitquery`. Either way, a new session then loads the tools. Never ask the user for an API key or token.
+Everything comes from the Bitquery MCP tools. If they are not available, or a Bitquery tool says to reconnect, tell the user how to connect Bitquery and stop: the first time, `hermes mcp add bitquery --url https://mcp.bitquery.io/mcp --auth oauth --connect-timeout 300` for a browser sign-in, or, where no browser can open (a server, SSH, scheduled runs), `hermes mcp add bitquery --url https://mcp.bitquery.io/mcp --auth header --connect-timeout 300` and paste a Bitquery access token from account.bitquery.io when Hermes asks; after that, `hermes mcp login bitquery` for a browser sign-in, or, if the token expired (`HTTP 401`), a new token in place of `MCP_BITQUERY_API_KEY` in the profile's `.env`. Either way, a new session then loads the tools. Never ask the user for an API key or token.
 
 ## 1. Choose the tool by the question
 

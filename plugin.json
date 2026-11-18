@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "bitquery",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "On-chain data in Hermes through Bitquery's hosted MCP server: token prices and candles, DEX trades, trader PnL, fund tracing, address labels, Hyperliquid and Polymarket. Read-only.",
   "author": {
     "name": "Bitquery",
