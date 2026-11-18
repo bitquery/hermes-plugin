@@ -35,17 +35,35 @@ Bitquery brings on-chain data into Hermes Agent. Ask about token prices, DEX tra
    hermes plugins install bitquery --enable
    ```
 
-2. Connect your Bitquery account:
+2. Connect your Bitquery account. The plugin's own `mcp.json` does not sign you in, so this step is needed. Pick one way:
+
+   **Browser sign-in.** Use this on a machine with a browser:
 
    ```
    hermes mcp add bitquery --url https://mcp.bitquery.io/mcp --auth oauth --connect-timeout 300
    ```
 
-   Hermes opens Bitquery's sign-in in your browser. A new account starts with a free 7-day trial. The plugin's own `mcp.json` does not sign you in, so this step is needed.
+   Hermes opens Bitquery's sign-in in your browser. A new account starts with a free 7-day trial.
+
+   **Access token.** Use this on a server, over SSH, or for scheduled runs, where no browser can open:
+
+   1. Generate a token at [account.bitquery.io](https://account.bitquery.io/user/api_v2/access_tokens) under **Authorization → Tokens**. It starts with `ory_at_`. See [how to generate a token](https://docs.bitquery.io/docs/authorization/how-to-generate/).
+   2. Run:
+
+      ```
+      hermes mcp add bitquery --url https://mcp.bitquery.io/mcp --auth header --connect-timeout 300
+      ```
+
+      Answer yes when Hermes asks if the server needs authentication, then paste the token. Hermes saves it as `MCP_BITQUERY_API_KEY` in your profile's `.env` and sends it as `Authorization: Bearer <token>`. If `MCP_BITQUERY_API_KEY` is already in that `.env`, Hermes uses it without asking.
+
+      If Hermes reports `HTTP 401` (`Failed to connect`), the token is wrong, expired or empty. Answer no to `Save config anyway`. Hermes has already saved what you pasted, so correct or delete the `MCP_BITQUERY_API_KEY` line in the `.env` before you run the command again; otherwise it reuses the bad token. If you saved the config anyway, run `hermes mcp remove bitquery` first.
 
 3. Start a new session and ask one of the questions above.
 
-If a Bitquery tool later asks you to reconnect, run `hermes mcp login bitquery`. Scheduled and unattended runs can't open a browser, so they report it instead.
+If a Bitquery tool later asks you to reconnect:
+
+- Browser sign-in: run `hermes mcp login bitquery`. Scheduled and unattended runs can't open a browser, so they report it instead.
+- Access token: tokens expire on the schedule set for your Bitquery application, and an expired token returns `HTTP 401`. Generate a new one, replace `MCP_BITQUERY_API_KEY` in your profile's `.env`, then start a new session or run `/reload-mcp`. Check it with `hermes mcp test bitquery`. `hermes mcp login` applies to browser sign-in only.
 
 ## Data and privacy
 
@@ -53,7 +71,7 @@ The plugin is read-only. Every Bitquery tool reads public blockchain data; none 
 
 Every tool call goes to Bitquery's server at `mcp.bitquery.io`, signed in as you. The addresses, tokens and questions in a call are sent to Bitquery, and each call uses credits from your Bitquery plan. What Hermes reads back joins your conversation, so it reaches the model provider your Hermes profile uses.
 
-Hermes keeps the Bitquery sign-in in your profile and refreshes it. The plugin has no code of its own, only these eight skills and the server address, and it stores nothing. The tool list comes from Bitquery's server when Hermes connects, so it can change without a new plugin version.
+Hermes keeps the Bitquery sign-in in your profile: a browser sign-in is refreshed automatically, and an access token stays in the profile's `.env` until you replace it. The plugin has no code of its own, only these eight skills and the server address, and it stores nothing. The tool list comes from Bitquery's server when Hermes connects, so it can change without a new plugin version.
 
 To disconnect, run `hermes mcp remove bitquery` and `hermes plugins disable bitquery`.
 
